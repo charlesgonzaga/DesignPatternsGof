@@ -1,16 +1,28 @@
-﻿using FactoryMethod.Dtos;
-using FactoryMethod.Model.Entities;
-using FactoryMethod.Service;
+﻿using FactoryMethod.Model.Dtos;
+using FactoryMethod.Model.Interfaces.Pattersns;
+using FactoryMethod.Model.Interfaces.Services;
 
 namespace FactoryMethod.Patterns;
 
-public class PessoaFactory
+public class PessoaFactory : IPessoaFactory
 {
-    public static string ObterPessoa(Pessoa entity)
-    {
-        if (entity is PessoaFisica)
-            return new PessoaFisicaService().RegraDeNegocioPessoaFisica(entity);
+    private readonly IPessoaFisicaService _pessoaFisicaService;
+    private readonly IPessoaJuridicaService _pessoaJuridicaService;
 
-        return new PessoaJuridicaService().RegraDeNegocioPessoaJuridica(entity);
+    public PessoaFactory(IPessoaFisicaService pessoaFisicaService, IPessoaJuridicaService pessoaJuridicaService)
+    {
+        _pessoaFisicaService = pessoaFisicaService;
+        _pessoaJuridicaService = pessoaJuridicaService;
+    }
+
+    public IPessoaService ObterPessoa(PessoaInputModel entity)
+    {
+        switch (entity.Cpf)
+        {
+            case null:
+                return _pessoaJuridicaService;
+            default:
+                return _pessoaFisicaService;
+        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using FactoryMethod.Model.Entities;
-
-namespace FactoryMethod.Dtos;
+﻿namespace FactoryMethod.Model.Entities;
 
 public class PessoaJuridica : Pessoa
 {

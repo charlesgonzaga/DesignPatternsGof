@@ -1,16 +1,14 @@
-﻿using FactoryMethod.Dtos;
-using FactoryMethod.Model;
-using FactoryMethod.Model.Entities;
+﻿using FactoryMethod.Model.Dtos;
+using FactoryMethod.Model.Interfaces.Services;
 
 namespace FactoryMethod.Service;
 
-public class PessoaFisicaService : IPessoaService
+public class PessoaFisicaService : IPessoaFisicaService
 {
     public PessoaFisicaService() { }
 
-    public string RegraDeNegocioPessoaFisica(Pessoa entity)
+    public string RegraDeNegocio(PessoaInputModel inputModel)
     {
-        var p = (PessoaFisica)entity;
-        return $"Regra de negócio para pessoa [Física: {p.Nome}] aplicada.";
+        return $"Regra de negócio para pessoa [Física: {inputModel.Nome}] aplicada.";
     }
 }
